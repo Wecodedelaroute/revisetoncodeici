@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Révision du Code de la Route</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaeaea;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            margin-top: 20px;
+        }
+
+        #quiz {
+            display: none;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .question {
+            margin: 20px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 15px 30px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .score {
+            font-size: 24px;
+            text-align: center;
+            margin-top: 20px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Révision du Code de la Route</h1>
+    <button id="startButton">Démarrer le Quiz</button>
+    <div id="quiz"></div>
+    <div class="score" id="score"></div>
+    
+    <script>
+        const questions = [
+            { question: "Quelle est la vitesse maximale autorisée sur autoroute en France ?", image: "url-de-l-image-1", answers: ["110 km/h", "130 km/h", "150 km/h"], correct: 1 },
+            { question: "Que signifie ce panneau ?", image: "url-de-l-image-2", answers: ["Stop", "Cédez le passage", "Interdiction"], correct: 2 },
+            { question: "Quand doit-on mettre ses feux de croisement ?", image: "url-de-l-image-3", answers: ["De jour uniquement", "De nuit uniquement", "Dans les tunnels et de nuit"], correct: 2 },
+            { question: "Que doit-on faire au rond-point ?", image: "url-de-l-image-4", answers: ["Priorité à droite", "Céder le passage aux véhicules sur le rond-point", "S'arrêter à l'entrée"], correct: 1 },
+            { question: "Qu'est-ce qu'un panneau de limitation de vitesse ?", image: "url-de-l-image-5", answers: ["Un panneau d'avertissement", "Un panneau d'interdiction", "Un panneau d'information"], correct: 1 },
+            // Ajoutez d'autres questions ici jusqu'à 60
+        ];
+
+        document.getElementById("startButton").addEventListener("click", loadQuiz);
+
+        function loadQuiz() {
+            const quizContainer = document.getElementById("quiz");
+            quizContainer.innerHTML = ""; // Clear previous content
+            questions.forEach((q, index) => {
+                const questionHTML = `
+                    <div class="question">
+                        <p>. </p>
+                        <img src="" alt="Image pour la question " />
+                        <div>" value=""> </label>`).join('')}</div>
+                    </div>
+                `;
+                quizContainer.innerHTML += questionHTML;
+            });
+            quizContainer.style.display = "block"; // Affiche le quiz
+            document.getElementById("startButton").style.display = "none"; // Cache le bouton
+            showScoreButton(); // Afficher le bouton pour soumettre les réponses
+        }
+
+        function showScoreButton() {
+            const scoreButton = document.createElement('button');
+            scoreButton.innerText = 'Soumettre le Quiz';
+            scoreButton.addEventListener('click', calculateScore);
+            document.body.appendChild(scoreButton);
+        }
+
+        function calculateScore() {
+            let score = 0;
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="question"]:checked`);
+                if (selected && parseInt(selected.value) === q.correct) {
+                    score++;
+                }
+            });
+            document.getElementById("score").innerText = `Vous avez obtenu  sur .`;
+        }
+    </script>
+</body>
+</html>
