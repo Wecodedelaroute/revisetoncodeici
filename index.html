@@ -79,53 +79,81 @@
     <button id="startButton">Démarrer le Quiz</button>
     <div id="quiz"></div>
     <div class="score" id="score"></div>
-    
+
     <script>
         const questions = [
-            { question: "Quelle est la vitesse maximale autorisée sur autoroute en France ?", image: "url-de-l-image-1", answers: ["110 km/h", "130 km/h", "150 km/h"], correct: 1 },
-            { question: "Que signifie ce panneau ?", image: "url-de-l-image-2", answers: ["Stop", "Cédez le passage", "Interdiction"], correct: 2 },
-            { question: "Quand doit-on mettre ses feux de croisement ?", image: "url-de-l-image-3", answers: ["De jour uniquement", "De nuit uniquement", "Dans les tunnels et de nuit"], correct: 2 },
-            { question: "Que doit-on faire au rond-point ?", image: "url-de-l-image-4", answers: ["Priorité à droite", "Céder le passage aux véhicules sur le rond-point", "S'arrêter à l'entrée"], correct: 1 },
-            { question: "Qu'est-ce qu'un panneau de limitation de vitesse ?", image: "url-de-l-image-5", answers: ["Un panneau d'avertissement", "Un panneau d'interdiction", "Un panneau d'information"], correct: 1 },
-            // Ajoutez d'autres questions ici jusqu'à 60
+            {
+                question: "Quelle est la vitesse maximale autorisée sur autoroute en France ?",
+                image: "https://example.com/image1.jpg", // Remplacez par une URL d'image valide
+                answers: ["110 km/h", "130 km/h", "150 km/h"],
+                correct: 1
+            },
+            {
+                question: "Que signifie ce panneau ?",
+                image: "https://example.com/image2.jpg", // Remplacez par une URL d'image valide
+                answers: ["Stop", "Cédez le passage", "Interdiction"],
+                correct: 1
+            },
+            {
+                question: "Quand doit-on mettre ses feux de croisement ?",
+                image: "https://example.com/image3.jpg", // Remplacez par une URL d'image valide
+                answers: ["De jour uniquement", "De nuit uniquement", "Dans les tunnels et de nuit"],
+                correct: 2
+            }
         ];
 
-        document.getElementById("startButton").addEventListener("click", loadQuiz);
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const startButton = document.getElementById("startButton");
+        const quizContainer = document.getElementById("quiz");
+        const scoreContainer = document.getElementById("score");
+
+        startButton.addEventListener("click", () => {
+            startButton.style.display = "none"; // Cacher le bouton
+            loadQuiz(); // Charger le quiz
+        });
 
         function loadQuiz() {
-            const quizContainer = document.getElementById("quiz");
-            quizContainer.innerHTML = ""; // Clear previous content
-            questions.forEach((q, index) => {
-                const questionHTML = `
-                    <div class="question">
-                        <p>. </p>
-                        <img src="" alt="Image pour la question " />
-                        <div>" value=""> </label>`).join('')}</div>
-                    </div>
-                `;
-                quizContainer.innerHTML += questionHTML;
-            });
-            quizContainer.style.display = "block"; // Affiche le quiz
-            document.getElementById("startButton").style.display = "none"; // Cache le bouton
-            showScoreButton(); // Afficher le bouton pour soumettre les réponses
-        }
+            quizContainer.innerHTML = ""; // Réinitialiser le contenu
+            const question = questions[currentQuestionIndex];
 
-        function showScoreButton() {
-            const scoreButton = document.createElement('button');
-            scoreButton.innerText = 'Soumettre le Quiz';
-            scoreButton.addEventListener('click', calculateScore);
-            document.body.appendChild(scoreButton);
-        }
+            const questionHTML = `
+                <div class="question">
+                    <p></p>
+                    <img src="" alt="Image de question">
+                    ">
+                            
+                        </label>
+                    `).join('')}
+                    <button id="nextButton">Suivant</button>
+                </div>
+            `;
 
-        function calculateScore() {
-            let score = 0;
-            questions.forEach((q, index) => {
-                const selected = document.querySelector(`input[name="question"]:checked`);
-                if (selected && parseInt(selected.value) === q.correct) {
-                    score++;
+            quizContainer.innerHTML = questionHTML;
+            quizContainer.style.display = "block"; // Afficher le quiz
+
+            document.getElementById("nextButton").addEventListener("click", () => {
+                const selectedAnswer = document.querySelector('input[name="answer"]:checked');
+                if (selectedAnswer) {
+                    if (parseInt(selectedAnswer.value) === question.correct) {
+                        score++;
+                    }
+                    currentQuestionIndex++;
+                    if (currentQuestionIndex < questions.length) {
+                        loadQuiz(); // Charger la question suivante
+                    } else {
+                        showScore(); // Afficher le score final
+                    }
+                } else {
+                    alert("Veuillez sélectionner une réponse."); // Alerte si aucune réponse sélectionnée
                 }
             });
-            document.getElementById("score").innerText = `Vous avez obtenu  sur .`;
+        }
+
+        function showScore() {
+            quizContainer.style.display = "none"; // Cacher le quiz
+            scoreContainer.innerHTML = `Votre score est  sur .`; // Afficher le score
         }
     </script>
 </body>
